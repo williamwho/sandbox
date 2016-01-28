@@ -1,0 +1,32 @@
+{% block sidenav %}
+<div ng-init="isActive = false" class="ng-cloak">
+   <div class="hh-sidenav-menu" ng-class="{'hh-sidenav-menu' : !isActive, 'hh-sidenav-menu changed' : isActive}" ng-click="isActive = !isActive">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  <div class="overlay" ng-class="{'overlay' : !isActive, 'overlay overlayed' : isActive}" ng-click="isActive = !isActive"></div>
+  <div class="hh-sidenav" ng-class="{'hh-sidenav' : !isActive, 'hh-sidenav slid' : isActive}">
+    <ul class="hh-sidenav-inner">
+      <li>
+        <a href="{% url "home.views.index" %}#/" ng-click="isActive = false">
+          Home
+        </a>
+      </li>
+    </ul>
+    <h3>Managers</h3>
+    <ul class="hh-sidenav-inner">
+      <li>
+        <a href="{% url "home.views.index" %}#/" ng-click="isActive = false">
+          Homeworks
+        </a>
+      </li>
+      <li>
+        <a href="{% url "home.views.index" %}#/" ng-click="isActive = false">
+          Schedule
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+{% endblock sidenav %}

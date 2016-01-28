@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block html_tag %}
+<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="Home" ng-strict-di>
+{% endblock html_tag %}
+
+{% load staticfiles %}
+
+{% block scripts %}
+    {{block.super}}
+    <!-- home scripts -->
+
+    {{js_files.home}}
+
+{% endblock scripts %}
+
+
+{% block stylesheets %}
+  {{block.super}}
+
+  <style>
+    /* make room for the navbar fixed to the top. */
+    body { padding-top: 50px; }
+  </style>
+{% endblock stylesheets %}

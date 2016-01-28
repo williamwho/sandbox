@@ -1,0 +1,51 @@
+{% comment %}
+  This navbar expects you to use a RequestContext. It uses the request.user information to build the login menu
+  in the upper right.
+
+  The navbar is fixed positioned to the top of the window. You should add 70 pixels of padding
+  to the top of the body on any page where you use it:
+
+  body { padding-top: 70px; }
+
+{% endcomment %}
+{% block navbar %}
+  <header id="hh-navbar" class="hh-navbar header navbar navbar-fixed-top" role="banner": ng-controller="HeaderController">
+    <div class="container-fluid">
+      <!-- included from home/navbar.html -->
+      {% block navbar_toggle %}
+        <div class="navbar-header">
+          <!-- Logo -->
+          <a class="navbar-brand-logo" ng-cloak>Fox Home</a>
+          <!-- /logo -->
+        </div>
+      {% endblock navbar_toggle %}
+
+      <!-- Main application tabs along the top -->
+      <div class="collapse navbar-collapse" id="hh-navbar-collapse">
+        {% block navbar_left %}
+
+        {% endblock navbar_left %}
+
+        <!-- only the user menu dropdown on the right -->
+        {% block navbar_right %}
+          <!-- Top Right Menu -->
+            
+            <li id="menu-nav-button" class="dropdown">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-user"></i>
+                <span class="hh-username">{% if user.is_hg_employee %}*{% endif %}{{user.get_short_name}}</span>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li id="logout-button"><a href="/authentication/logout/">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+          <!-- /Top Right Menu -->
+        {% endblock navbar_right %}
+      </div><!-- /.navbar-collapse -->
+    </div>
+
+  <hh-loading-indicator></hh-loading-indicator>
+  </header>
+{% endblock navbar %}

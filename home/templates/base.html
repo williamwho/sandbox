@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+{% comment %}
+base template for a variety of pages.
+
+Please use {{block.super}} if you override head, meta, scripts, or stylesheets.
+The content and title blocks you may completely replace.
+{% endcomment %}
+
+{% load staticfiles %}
+
+{% block html_tag %}
+<html>
+{% endblock html_tag %}
+
+<head>
+  {% block head %}
+    {% block meta %}
+      <!-- base meta -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="Content-Language" content="en" />
+
+      <link rel="shortcut icon" href="{% static "core/images/hg_favicon.ico" %}">
+    {% endblock meta %}
+
+    <title>
+      {% block title %}
+        Healthgrades Reports
+      {% endblock title %}
+    </title>
+
+    {% block stylesheets %}
+      <!-- Fonts! -->
+      <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+
+
+      <!-- Jupiter styles -->
+      {% if hhconfig.use_compiled_css %}
+        <!-- compiled, minified master CSS style -->
+        <link rel="stylesheet" href="{% static "core/styles/css/jupiter.css" %}"></link>
+      {% else %}
+        <!-- requires less.js, which compiles it to css on-the-fly and dynamically pulls in all dependencies. -->
+        <link rel="stylesheet/less" href="{% static "core/styles/less/jupiter.less" %}"></link>
+      {% endif %}
+
+    {% endblock stylesheets %}
+
+  {% endblock head %}
+</head>
+
+{% comment %}
+  It may seem odd to wrap the <body> tag in it's own block, but there are many cases when you need to
+  add attributes on the body head tag: CSS class, onload="...", contenteditable="true", ng-app="...", etc.
+{% endcomment %}
+
+{% block body_tag %}
+  <body id="content">
+{% endblock body_tag %}
+  <div id="important-hidden-content" class="x-hidden"></div>
+
+  {% block navbar %}
+  {% endblock navbar %}
+
+  {% block sidenav %}
+    {% include "home/sidenav-menu.html" %}
+  {% endblock sidenav %}
+
+  {% block content %}
+    {% include "home/navbar.html" %}
+
+    <!-- home view -->
+    <div class="app container" ng-view="" autoscroll=""></div>
+  {% endblock content %}
+
+  {% block footer %}
+  <div id="footer" class="" ng-cloak>
+    <div class="container-fluid">
+      <p class="footer-text">© Copyright 2016 Foxberg, all rights reserved.</p>
+    </div>
+  </div>
+  {% endblock footer %}
+
+  {# YUI recommends that script tags should generally go at the end of the body. #}
+  {% block scripts %}
+    {% if not hhconfig.use_compiled_css %}
+      <!-- less.js compiles .less files on-the-fly. Not used in production.  -->
+      <script type="text/javascript">less = { env: 'development' };</script>
+      <script src="{% static "home/bower_components/less.js/dist/less-1.7.0.js" %}"></script>
+    {% endif %}
+  {% endblock scripts %}
+</body>
+</html>
+
